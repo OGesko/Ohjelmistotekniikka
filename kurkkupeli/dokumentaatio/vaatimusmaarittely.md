@@ -9,12 +9,12 @@
 - 2-6 pelaajaa
 
 ## toiminnallisuus
-- pakan luonti ja sekoitus
-- korttien jakaminen tarvittavalle pelaaja määrälle
-- automaattinen pelin kierto
+- pakan luonti ja sekoitus 		done
+- korttien jakaminen tarvittavalle pelaaja määrälle		done
+- automaattinen pelin kierto		wip
 - voittajan julistaminen
 - pisteiden lasku ja tallentaminen
 - oman käden visualisointi
-- korttien valinta pelattavaksi
+- korttien valinta pelattavaksi		done/wip
 - kone vastustaja (mahd. eri tasoisia)
 
