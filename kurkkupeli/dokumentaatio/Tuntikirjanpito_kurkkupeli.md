@@ -1,4 +1,10 @@
 # Tuntikirjanpito kurkkupeli
 
+## viikko 3
+4 tuntia 
 
-- 1.4 4 tuntia 
+## viikko4
+9 tuntia
+
+## Yhteensä
+13 tuntia
