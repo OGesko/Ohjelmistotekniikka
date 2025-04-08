@@ -18,3 +18,7 @@
 - korttien valinta pelattavaksi		done/wip
 - kone vastustaja (mahd. eri tasoisia)
 
+# Todo
+- syötteiden validointi
+- tulosten tallennus
+- virheiden käsittely
