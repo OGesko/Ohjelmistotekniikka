@@ -1,12 +1,12 @@
 import unittest
-from start import Card, Deck
+from deck import Card, Deck
 
 class TestCard(unittest.TestCase):
     def setUp(self):
         self.card = Card("h",5)
 
     def test_card_display(self):
-        self.assertEqual(self.card.display(), ("h",5))
+        self.assertEqual(self.card.display(), "h, 5")
 
 class TestDeck(unittest.TestCase):
     def setUp(self):
@@ -17,5 +17,5 @@ class TestDeck(unittest.TestCase):
 
     def test_suffle(self):
         ogdeck = self.deck.deck[:]
-        self.deck.suffle()
+        self.deck.shuffle()
         self.assertNotEqual(self.deck.deck, ogdeck)
