@@ -9,5 +9,17 @@
 [tuntikirjanpito](https://github.com/OGesko/Ohjelmistotekniikka/blob/main/kurkkupeli/dokumentaatio/Tuntikirjanpito_kurkkupeli.md)
 
 - moninpelattava (2-6)
-- kone vastustaja
 
+## Asennus
+```
+git clone https://github.com/OGesko/Ohjelmistotekniikka/tree/main/kurkkupeli.git
+```
+```
+cd Ohjelmistotekniikka/kurkkupeli
+```
+```
+poetry install
+```
+```
+poetry run invoke start
+```
