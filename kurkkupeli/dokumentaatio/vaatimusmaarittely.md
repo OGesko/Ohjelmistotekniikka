@@ -6,15 +6,16 @@
 - peli etenee kierroksilla joissa on esitettävä sama tai suurempi kortti kuin edellisellä
 - se jolle jää isoin korti häviää kierroksen 
 ## käyttäjät
-- 2-6 pelaajaa
+- 1 pelaaja
+- 1-5 bottia
 
 ## toiminnallisuus
 - pakan luonti ja sekoitus 		done
 - korttien jakaminen tarvittavalle pelaaja määrälle		done
-- automaattinen pelin kierto		wip
-- voittajan julistaminen
-- pisteiden lasku ja tallentaminen
-- oman käden visualisointi
-- korttien valinta pelattavaksi		done/wip
-- kone vastustaja (mahd. eri tasoisia)
+- automaattinen pelin kierto		done
+- voittajan julistaminen (häviäjän)        done
+- pisteiden lasku ja tallentaminen      no
+- oman käden visualisointi      done
+- korttien valinta pelattavaksi		done
+- kone vastustaja (mahd. eri tasoisia)      done
 

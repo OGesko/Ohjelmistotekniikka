@@ -1,67 +1,87 @@
 from deck import Deck
 from player import Player
 
-def create_players():
-    players = []
-    num = int(input("how many players? (2-6) "))
-    for _ in range(0, num):
-        players.append(Player(input("player name: ")))
-    print(f"players: {[x.name for x in players]}")
+def create_players(bots):
+    players = [Player("You")]
+    for i in range(bots):
+        players.append(Player(f"Bot_{i+1}"))
+    #print(f"players: {[x.name for x in players]}")
     return players
 
-def deal_cards(deck, players):
-    for _ in range(7):
+def deal_cards(deck, players, cards_per_player=7):
+    for _ in range(cards_per_player):
         for player in players:
             player.hand.append(deck.deal())
 
-def game_loop(players, deck):
-    deck.shuffle()
-    deal_cards(deck, players)
-    first = 0
-    while True:
-        first = game_round(first, players)
-        if all(len(player.hand) == 1 for player in players):
-            break
+def get_valid_cards(hand, highest_card):
+    if highest_card is None:
+        return hand
+    valid = [card for card in hand if card >= highest_card]
+    return valid if valid else [min(hand)]
 
-    print("\n--- Final Cards ---")
-    for player in players:
-        print(f"{player.name}: {player.hand[0]}")
+def play_card(player, card):
+    player.hand.remove(card)
+    return card
 
-    # Determine loser
-    loser = max(players, key=lambda p: p.hand[0])
-    print(f"\nGame over! The loser is {loser.name} with {loser.hand[0]}")
+def game_over(players):
+    return all(len(player.hand) == 1 for player in players)
 
-def game_round(first, players):
-    highest_card = None
-    new_first = first
-    for i in range(len(players)):
-        player = players[(first + i) % len(players)]
-        player.show_hand()
-        print(f"card to beat: {highest_card}" if highest_card else "start round: ")
+def get_final_loser(players, played_cards):
+    loser = max(players, key=lambda p: max(card.rank for card in p.hand))
+    # Find the last card played by the loser
+    last_card_played = next((card for card, player_name in played_cards if player_name == loser.name), None)
+    return loser, last_card_played
 
-        valid = [card for card in player.hand if (highest_card is None) or (card >= highest_card)]
-        smallest_card = min(player.hand)
+class Game:
+    def __init__(self, bot_count):
+        self.deck = Deck()
+        self.deck.shuffle()
+        self.players = create_players(bot_count)
+        deal_cards(self.deck, self.players)
+        self.first_player_index = 0
+        self.highest_card = None
+        self.new_first_player_index = 0
+        self.current_turn = 0
+        self.round_done = False
 
-        while True:
-            choice = int(input("choose card by index"))
-            card_to_play = player.hand[choice]
-            if card_to_play in valid or (len(valid) == 0 and card_to_play == smallest_card):
-                break
-            print("invalid card")
+    def start_round(self):
+        self.highest_card = None
+        self.new_first_player_index = self.first_player_index
+        self.current_turn = 0
+        self.round_done = False
 
-        player.hand.remove(card_to_play)
-        print(f"{player.name}: {card_to_play.display()}")
+    def get_current_player(self):
+        index = (self.first_player_index + self.current_turn) % len(self.players)
+        return self.players[index]
 
-        if highest_card is None or card_to_play > highest_card:
-            highest_card = card_to_play
-            new_first = (first + i) % len(players)
+    def is_turn_done(self):
+        # Check if the current turn has reached the total number of players
+        return self.current_turn >= len(self.players)
 
-    return new_first
+    def play_turn(self, card):
+        if self.is_turn_done():
+            print("Turn is already done. No more moves allowed.")
+            return
 
-def main():
-    print("start game + help")
-    deck = Deck()
-    players = create_players()
-    game_loop(players, deck)
+        player = self.get_current_player()
+        play_card(player, card)
 
-main()
+        if self.highest_card is None or card.rank >= self.highest_card.rank:
+            self.highest_card = card
+            self.new_first_player_index = (self.first_player_index + self.current_turn) % len(self.players)
+
+        self.current_turn += 1
+        print(f"Played {card} by {player.name}, Current Turn: {self.current_turn}")
+
+    def end_round(self):
+        self.first_player_index = self.new_first_player_index
+        self.round_done = True
+
+    def is_game_over(self):
+        return game_over(self.players)
+
+    def get_loser(self, played_cards):
+        # Determine the player with the highest card in their hand
+        loser = max(self.players, key=lambda p: max((card.rank for card in p.hand), default=0))
+        last_card_played = max(loser.hand, key=lambda c: c.rank, default=None)
+        return loser, last_card_played

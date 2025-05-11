@@ -3,6 +3,7 @@ class Player:
     def __init__(self, name: str):
         self.name = name
         self.hand = []
+        self.score = 0
 
     def show_hand(self):
         for id_x, card in enumerate(self.hand):
