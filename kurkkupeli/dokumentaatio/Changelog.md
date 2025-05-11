@@ -11,3 +11,8 @@
 - Korttien jako pelaajille
 - Pelaajan käden näyttäminen
 - Pelikierroksen toteutus
+
+## loppu
+- Pelin toiminta
+- Käyttöliittymä
+- Dokumentaation päivitys
